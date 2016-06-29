@@ -38,20 +38,23 @@ Installation of cameras on Linux is lengthy compared to other supported platform
   * `sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/`
   * Reboot or run `sudo udevadm control --reload-rules && udevadm trigger` to enforce the new udev rules
 3. Next, choose one of the following subheadings based on desired machine configuration / kernel version (and remember to complete step 4 after). **Note: ** Multi-camera support is currently NOT supported on 3.19.xx kernels. Please update to 4.4 stable. 
-  * **Updated 4.4 Stable Kernel**
+  * **Stock 4.4 Kernel**
+    * Install the latest 4.4 kernel using apt-get. This kernel already includes all necessary patches.
+      * `sudo apt-get install linux-image-generic-lts-xenial`
+  * **(OR) Patched 4.4 Stable Kernel from PPA**
     * Run the following script to install necessary dependencies (GCC 4.9 compiler and openssl) and update kernel to v4.4-wily
       * `./scripts/install_dependencies-4.4.sh`
     * Run the following script to patch uvcvideo.ko
       * `./scripts/patch-uvcvideo-4.4.sh v4.4-wily` (note the argument provided to this version of the script)
       * This script involves shallow cloning the Linux source repository (~100mb), and may take a while
-  * **(OR) Kernel in 14.04.xx**
+  * **(OR) Patched currently used kernel in 14.04.xx**
     * Run the following script to patch uvcvideo.ko
       * `./scripts/patch-uvcvideo-ubuntu-mainline.sh`
     * (R200 Only with 3.19.xx Kernel) Install connectivity workaround
       * `./scripts/install-r200-udev-fix.sh`
       * This udev fix is not necessary for kernels >= 4.2
       * Use of 3.19.xx Kernel is not recommended. 
-  * **(OR) Kernel in 16.04.xx**
+  * **(OR) Patched Kernel in 16.04.xx**
     * `/scripts/patch-uvcvideo-16.04.simple.sh`
 4. Reload the uvcvideo driver
   * `sudo modprobe uvcvideo`
